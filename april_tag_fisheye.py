@@ -28,17 +28,17 @@ def main():
 
 	while (True):
 			try:
-				_, frame = video_capture.read()
-				gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-				undistorted_img = cv2.remap(gray_frame, map1, map2, interpolation = cv2.INTER_LINEAR,borderMode=cv2.BORDER_CONSTANT)
-				
-				result = detector.detect(undistorted_img)
+				_, frame = video_capture.read()	
+				undistorted_img = cv2.remap(frame, map1, map2, interpolation = cv2.INTER_LINEAR,borderMode=cv2.BORDER_CONSTANT)
+				gray_frame = cv2.cvtColor(undistorted_img, cv2.COLOR_BGR2GRAY)
+
+				result = detector.detect(gray_frame)
 				
 				if result:
-					frame, angle = draw_tag(frame,result)
+					frame, angle = draw_tag(undistorted_img,result)
 					print(angle)
 				
-				cv2.imshow("april_tags",frame)
+				cv2.imshow("april_tags",undistorted_img)
 				cv2.waitKey(1)
 
 			except KeyboardInterrupt:
