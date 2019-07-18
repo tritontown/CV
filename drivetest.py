@@ -17,7 +17,6 @@ speed = min_speed
 jump = 1
 bigjump = 5
 second = 0.0
-
 pwm = Adafruit_PCA9685.PCA9685()
 pwm.set_pwm_freq(60)
 
