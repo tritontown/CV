@@ -6,7 +6,6 @@ import math
 import Adafruit_PCA9685
 import curses
 
-
 pwm = Adafruit_PCA9685.PCA9685()
 pwm.set_pwm_freq(60)
 #pwm.set_pwm(2,0,375)
