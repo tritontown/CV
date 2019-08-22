@@ -6,6 +6,7 @@ import math
 import Adafruit_PCA9685
 import curses
 
+
 pwm = Adafruit_PCA9685.PCA9685()
 pwm.set_pwm_freq(60)
 #pwm.set_pwm(2,0,375)
@@ -33,8 +34,8 @@ def region_of_interest(edges):
 
     # only focus bottom half of the screen
     polygon = np.array([[
-        (0, height * 1 / 2),
-        (width, height * 1 / 2),
+        (0, height * 3 / 4),
+        (width, height * 3 / 4),
         (width, height),
         (0, height),
     ]], np.int32)
@@ -205,15 +206,18 @@ def stabilize_steering_angle(curr_steering_angle, new_steering_angle, num_of_lan
     return stabilized_steering_angle
 
 def main():
+    frameHeight = 480
+    frameWidth = 640
     video_capture = cv2.VideoCapture(0)
-    video_capture.set(3, 320)
-    video_capture.set(4, 240)
+    video_capture.set(3, frameWidth)
+    video_capture.set(4, frameHeight)
     curr_angle = 90
     #pwm.set_pwm(2,0,374)
 
     #char = screen.getch()
     while (True):
         _, frame = video_capture.read()
+        frame = frame[0:(5*frameHeight)//8, frameWidth//4:13*frameWidth//16]
         lane_line = detect_lane(frame)
         if lane_line:
             lane_lines_image = display_lines(frame, lane_line)
